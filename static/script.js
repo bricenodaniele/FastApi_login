@@ -16,10 +16,8 @@ async function controllaCredenziali() {
 else 
     doument.getElementById('risultato').innerText = "riprova";
 }
-async function controlloconPost() {
-    
-}
-async function loggati() {
+
+async function  controlloconPost() {
 
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
@@ -44,7 +42,33 @@ async function loggati() {
         document.getElementById("risultato").innerText = "Accesso negato";
     }
 }
+async function  loggati_Pandas() {
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if (!username || !password)
+        return alert("Scrivi lo username e password");
+
+    const res = await fetch("/loginPandas", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `username=${username}&password=${password}`
+    });
+
+    const json = await res.json();
+
+    if (json.messaggio == 1){
+        document.getElementById("risultato").innerText = "Accesso effettuato";
+    }
+    else {
+        document.getElementById("risultato").innerText = "Accesso negato";
+    }
+}
 
 
 document.getElementById('btn_registrati').addEventListener('click', controllaCredenziali);
-document.getElementById('btn_registrati2').addEventListener('click', loggati);
+document.getElementById('btn_registrati2').addEventListener('click', controlloconPost);
+document.getElementById('bottonePandas').addEventListener('click', loggati_Pandas);
